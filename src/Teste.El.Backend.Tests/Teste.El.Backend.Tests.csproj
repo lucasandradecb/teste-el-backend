@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Teste.El.Backend.Api\Teste.El.Backend.Api.csproj" />
+    <ProjectReference Include="..\Teste.El.Backend.Application\Teste.El.Backend.Application.csproj" />
+    <ProjectReference Include="..\Teste.El.Backend.Domain\Teste.El.Backend.Domain.csproj" />
+    <ProjectReference Include="..\Teste.El.Backend.Infrastructure\Teste.El.Backend.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
