@@ -9,10 +9,10 @@ using System.Diagnostics.CodeAnalysis;
 namespace Teste.El.Backend.Infrastructure.Repositories
 {
     /// <summary>
-    /// Repositório de clientes
+    /// Repositório de modelo do veiculo
     /// </summary>
     [ExcludeFromCodeCoverage]
-    public class ClienteRepository : RedisRepository<Cliente>, IClienteRepository
+    public class ModeloVeiculoRepository : RedisRepository<ModeloVeiculo>, IModeloVeiculoRepository
     {
         private TimeSpan REDIS_TEMPO_EXPIRACAO = new TimeSpan(10, 0, 0, 0);
 
@@ -20,7 +20,7 @@ namespace Teste.El.Backend.Infrastructure.Repositories
         /// Construtor
         /// </summary>
         /// <param name="config"></param>
-        public ClienteRepository(RedisConfiguration config) : base(config)
+        public ModeloVeiculoRepository(RedisConfiguration config) : base(config)
         {
             
         }
@@ -30,33 +30,33 @@ namespace Teste.El.Backend.Infrastructure.Repositories
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        protected override string CreateRedisKey(Cliente model) => ObterChave(model.Id);
+        protected override string CreateRedisKey(ModeloVeiculo model) => ObterChave(model.Id);
 
         /// <summary>
         /// Obtém chave de acesso do redis
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static string ObterChave(Guid id) => $"cliente:{id}";
+        public static string ObterChave(Guid id) => $"modelo:veiculo:{id}";
 
         /// <summary>
-        /// Armazena o cliente no banco de dados
+        /// Armazena o modelo do veiculo no banco de dados
         /// </summary>
-        /// <param name="cliente"></param>
+        /// <param name="modelo"></param>
         /// <param name="ctx"></param>
         /// <returns></returns>
-        public async Task Salvar(Cliente cliente, CancellationToken ctx)
+        public async Task Salvar(ModeloVeiculo modelo, CancellationToken ctx)
         {
-            await Add(cliente, ctx, REDIS_TEMPO_EXPIRACAO);
+            await Add(modelo, ctx, REDIS_TEMPO_EXPIRACAO);
         }
 
         /// <summary>
-        /// Obtém o cliente pelo id
+        /// Obtém o modelo pelo id
         /// </summary>
         /// <param name="id"></param>
         /// <param name="ctx"></param>
         /// <returns></returns>
-        public async Task<Cliente> ObterPorId(Guid id, CancellationToken ctx)
+        public async Task<ModeloVeiculo> ObterPorId(Guid id, CancellationToken ctx)
         {
             return await GetByKey(ObterChave(id), ctx);
         }

@@ -6,23 +6,23 @@ using System.Threading.Tasks;
 namespace Teste.El.Backend.Domain.Repositories
 {
     /// <summary>
-    /// Interface do repositório de clientes
+    /// Interface do repositório de modelo de veiculos
     /// </summary>
-    public interface IClienteRepository
+    public interface IModeloVeiculoRepository
     {
         /// <summary>
-        /// Armazena um cliente no banco de dados
+        /// Armazena o modelo de um veiculo no banco de dados
         /// </summary>
-        /// <param name="cliente"></param>
+        /// <param name="marca"></param>
         /// <param name="ctx"></param>
         /// <returns></returns>
-        Task Salvar(Cliente cliente, CancellationToken ctx);
+        Task Salvar(ModeloVeiculo marca, CancellationToken ctx);
         /// <summary>
-        /// Obtém o cliente por id
+        /// Obtém o modelo do veiculo por id
         /// </summary>
         /// <param name="id"></param>
         /// <param name="ctx"></param>
         /// <returns></returns>
-        Task<Cliente> ObterPorId(Guid id, CancellationToken ctx);
+        Task<ModeloVeiculo> ObterPorId(Guid id, CancellationToken ctx);
     }
 }

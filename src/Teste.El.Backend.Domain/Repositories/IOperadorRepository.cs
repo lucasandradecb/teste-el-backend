@@ -6,23 +6,23 @@ using System.Threading.Tasks;
 namespace Teste.El.Backend.Domain.Repositories
 {
     /// <summary>
-    /// Interface do repositório de clientes
+    /// Interface do repositório de operadores
     /// </summary>
-    public interface IClienteRepository
+    public interface IOperadorRepository
     {
         /// <summary>
-        /// Armazena um cliente no banco de dados
+        /// Armazena um operador no banco de dados
         /// </summary>
-        /// <param name="cliente"></param>
+        /// <param name="operador"></param>
         /// <param name="ctx"></param>
         /// <returns></returns>
-        Task Salvar(Cliente cliente, CancellationToken ctx);
+        Task Salvar(Operador operador, CancellationToken ctx);
         /// <summary>
-        /// Obtém o cliente por id
+        /// Obtém o operador por id
         /// </summary>
         /// <param name="id"></param>
         /// <param name="ctx"></param>
         /// <returns></returns>
-        Task<Cliente> ObterPorId(Guid id, CancellationToken ctx);
+        Task<Operador> ObterPorId(Guid id, CancellationToken ctx);
     }
 }
