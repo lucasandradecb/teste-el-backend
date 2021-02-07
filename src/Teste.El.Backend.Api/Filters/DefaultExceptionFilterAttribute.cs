@@ -4,6 +4,7 @@ using Serilog;
 using Teste.El.Backend.Application.Models;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
+using System;
 
 namespace Teste.El.Backend.Api.Filters
 {
@@ -16,10 +17,22 @@ namespace Teste.El.Backend.Api.Filters
         {
             Log.Error(context.Exception, context.Exception.Message);
 
-            context.Result = new ObjectResult(new ErrorModel(DEFAULT_EXCEPTION))
+            var returnDefaltException = Environment.GetEnvironmentVariable("RETURN_DEFAULT_EXCEPTION") == bool.TrueString;
+
+            if (returnDefaltException)
             {
-                StatusCode = HttpStatusCode.InternalServerError.GetHashCode()
-            };
+                context.Result = new ObjectResult(new ErrorModel(DEFAULT_EXCEPTION))
+                {
+                    StatusCode = HttpStatusCode.InternalServerError.GetHashCode()
+                };
+            }
+            else
+            {
+                context.Result = new ObjectResult(new ErrorModel(context.Exception.ToString()))
+                {
+                    StatusCode = HttpStatusCode.InternalServerError.GetHashCode()
+                };
+            }
         }
     }
 }

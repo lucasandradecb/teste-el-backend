@@ -30,14 +30,14 @@ namespace Teste.El.Backend.Infrastructure.Repositories
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        protected override string CreateRedisKey(Operador model) => ObterChave(model.Id);
+        protected override string CreateRedisKey(Operador model) => ObterChave(model.Matricula);
 
         /// <summary>
         /// Obtém chave de acesso do redis
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="matricula"></param>
         /// <returns></returns>
-        public static string ObterChave(Guid id) => $"operador:{id}";
+        public static string ObterChave(string matricula) => $"operador:{matricula}";
 
         /// <summary>
         /// Armazena o operador no banco de dados
@@ -51,14 +51,14 @@ namespace Teste.El.Backend.Infrastructure.Repositories
         }
 
         /// <summary>
-        /// Obtém o operador pelo id
+        /// Obtém o operador pela matricula
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="matricula"></param>
         /// <param name="ctx"></param>
         /// <returns></returns>
-        public async Task<Operador> ObterPorId(Guid id, CancellationToken ctx)
+        public async Task<Operador> ObterPorMatricula(string matricula, CancellationToken ctx)
         {
-            return await GetByKey(ObterChave(id), ctx);
+            return await GetByKey(ObterChave(matricula), ctx);
         }
     }    
 }

@@ -5,6 +5,8 @@ using Localiza.BuildingBlocks.Redis;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Diagnostics.CodeAnalysis;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Teste.El.Backend.Infrastructure.Repositories
 {
@@ -30,14 +32,14 @@ namespace Teste.El.Backend.Infrastructure.Repositories
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        protected override string CreateRedisKey(Cliente model) => ObterChave(model.Id);
+        protected override string CreateRedisKey(Cliente model) => ObterChave(model.Cpf.Numero);
 
         /// <summary>
         /// Obtém chave de acesso do redis
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="cpf"></param>
         /// <returns></returns>
-        public static string ObterChave(Guid id) => $"cliente:{id}";
+        public static string ObterChave(string cpf) => $"cliente:{cpf}";
 
         /// <summary>
         /// Armazena o cliente no banco de dados
@@ -51,14 +53,40 @@ namespace Teste.El.Backend.Infrastructure.Repositories
         }
 
         /// <summary>
-        /// Obtém o cliente pelo id
+        /// Obtém o cliente pelo cpf
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="cpf"></param>
         /// <param name="ctx"></param>
         /// <returns></returns>
-        public async Task<Cliente> ObterPorId(Guid id, CancellationToken ctx)
+        public async Task<Cliente> ObterPorCpf(string cpf, CancellationToken ctx)
         {
-            return await GetByKey(ObterChave(id), ctx);
+            return await GetByKey(ObterChave(cpf), ctx);
+        }
+
+        /// <summary>
+        /// Verifica se o cliente já existe no banco
+        /// </summary>
+        /// <param name="cliente"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        public async Task<bool> VerificarSeExiste(Cliente cliente, CancellationToken ctx)
+        {
+            var clienteExistente = await ObterPorCpf(cliente.Cpf.Numero, ctx);
+
+            return clienteExistente?.Cpf?.Numero == cliente.Cpf.Numero;
+        }
+
+        /// <summary>
+        /// Obtém lista de clientes pelo cpf
+        /// </summary>
+        /// <param name="cpf"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        public async Task<List<Cliente>> ListarTodos()
+        {
+            var listaChaves =  GetServer().Keys(pattern: "clientes:*").ToList();
+
+            return new List<Cliente>();
         }
     }    
 }

@@ -90,12 +90,12 @@ namespace Teste.El.Backend.Tests.Controllers
             Assert.IsType<CreatedResult>(result);
         }
 
-        private ClienteController CreateClienteController()
+        private ClientesController CreateClienteController()
         {
             var clienteRepository = new ClienteRepositoryMock();
             var clienteApplication = new ClienteApplication(_mapperFixture.Mapper, clienteRepository);
 
-            return new ClienteController(_mapperFixture.Mapper, clienteApplication, clienteRepository);
+            return new ClientesController(_mapperFixture.Mapper, clienteApplication, clienteRepository);
         }
 
         private T GetOkObject<T>(IActionResult result)

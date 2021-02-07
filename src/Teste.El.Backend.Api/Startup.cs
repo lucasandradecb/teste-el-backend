@@ -12,6 +12,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Teste.El.Backend.Infrastructure;
 using Teste.El.Backend.Application;
+using Teste.El.Backend.Domain.Repositories;
+using Teste.El.Backend.Infrastructure.Repositories;
 
 namespace Teste.El.Backend.Api
 {
@@ -32,6 +34,16 @@ namespace Teste.El.Backend.Api
             services.AddControllers();
 
             services.AddMvc(options => options.Filters.Add(new DefaultExceptionFilterAttribute()));
+
+            services.AddRedis()
+                .WithEnviroments(Configuration)
+                .Add<IClienteRepository, ClienteRepository>()
+                .Add<IMarcaVeiculoRepository, MarcaVeiculoRepository>()
+                .Add<IModeloVeiculoRepository, ModeloVeiculoRepository>()
+                .Add<IOperadorRepository, OperadorRepository>()
+                .Add<IVeiculoRepository, VeiculoRepository>();
+
+            services.AddAutoMapper(typeof(ClienteApplication));
 
             services.AddInfraServices();
 

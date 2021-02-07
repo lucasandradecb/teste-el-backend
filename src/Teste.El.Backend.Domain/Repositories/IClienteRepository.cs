@@ -18,11 +18,18 @@ namespace Teste.El.Backend.Domain.Repositories
         /// <returns></returns>
         Task Salvar(Cliente cliente, CancellationToken ctx);
         /// <summary>
-        /// Obtém o cliente por id
+        /// Obtém o cliente por cpf
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="cpf"></param>
         /// <param name="ctx"></param>
         /// <returns></returns>
-        Task<Cliente> ObterPorId(Guid id, CancellationToken ctx);
+        Task<Cliente> ObterPorCpf(string cpf, CancellationToken ctx);
+        /// <summary>
+        /// Verifica se o cliente já existe no banco
+        /// </summary>
+        /// <param name="cliente"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        Task<bool> VerificarSeExiste(Cliente cliente, CancellationToken ctx);
     }
 }

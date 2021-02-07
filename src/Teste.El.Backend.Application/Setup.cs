@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
+using Teste.El.Backend.Application.Interfaces;
 
 namespace Teste.El.Backend.Application
 {
@@ -14,7 +15,7 @@ namespace Teste.El.Backend.Application
         /// </summary>
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
-            //services.AddScoped<IProcessarPagamentoHandler, ProcessarPagamentoHandler>();
+            services.AddScoped<IClienteApplication, ClienteApplication>();
             return services;
         }
     }

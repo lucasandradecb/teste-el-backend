@@ -18,11 +18,11 @@ namespace Teste.El.Backend.Domain.Repositories
         /// <returns></returns>
         Task Salvar(Operador operador, CancellationToken ctx);
         /// <summary>
-        /// Obtém o operador por id
+        /// Obtém o operador por matricula
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="matricula"></param>
         /// <param name="ctx"></param>
         /// <returns></returns>
-        Task<Operador> ObterPorId(Guid id, CancellationToken ctx);
+        Task<Operador> ObterPorMatricula(string matricula, CancellationToken ctx);
     }
 }
