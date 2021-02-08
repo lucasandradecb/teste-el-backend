@@ -18,11 +18,18 @@ namespace Teste.El.Backend.Domain.Repositories
         /// <returns></returns>
         Task Salvar(Veiculo veiculo, CancellationToken ctx);
         /// <summary>
-        /// Obtém o veiculo por id
+        /// Obtém o veiculo por placa
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="placa"></param>
         /// <param name="ctx"></param>
         /// <returns></returns>
-        Task<Veiculo> ObterPorId(Guid id, CancellationToken ctx);
+        Task<Veiculo> ObterPorPlaca(string placa, CancellationToken ctx);
+        /// <summary>
+        /// Verifica se o modelo já existe no banco
+        /// </summary>
+        /// <param name="veiculo"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        Task<bool> VerificarSeExiste(Veiculo veiculo, CancellationToken ctx);
     }
 }

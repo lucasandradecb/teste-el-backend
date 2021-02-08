@@ -15,7 +15,8 @@ namespace Teste.El.Backend.Application
         /// </summary>
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
-            services.AddScoped<IClienteApplication, ClienteApplication>();
+            services.AddScoped<IUsuarioApplication, UsuarioApplication>();
+            services.AddScoped<IVeiculoApplication, VeiculoApplication>();
             return services;
         }
     }

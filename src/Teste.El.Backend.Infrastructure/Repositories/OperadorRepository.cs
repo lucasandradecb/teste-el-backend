@@ -60,5 +60,18 @@ namespace Teste.El.Backend.Infrastructure.Repositories
         {
             return await GetByKey(ObterChave(matricula), ctx);
         }
+
+        /// <summary>
+        /// Verifica se o operador já existe no banco
+        /// </summary>
+        /// <param name="operador"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        public async Task<bool> VerificarSeExiste(Operador operador, CancellationToken ctx)
+        {
+            var operadorExistente = await ObterPorMatricula(operador.Matricula, ctx);
+
+            return operadorExistente?.Matricula == operador.Matricula;
+        }
     }    
 }

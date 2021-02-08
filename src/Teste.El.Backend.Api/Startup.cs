@@ -43,7 +43,8 @@ namespace Teste.El.Backend.Api
                 .Add<IOperadorRepository, OperadorRepository>()
                 .Add<IVeiculoRepository, VeiculoRepository>();
 
-            services.AddAutoMapper(typeof(ClienteApplication));
+            services.AddAutoMapper(typeof(UsuarioApplication));
+            services.AddAutoMapper(typeof(VeiculoApplication));
 
             services.AddInfraServices();
 

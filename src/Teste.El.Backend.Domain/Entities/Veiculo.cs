@@ -27,11 +27,11 @@ namespace Teste.El.Backend.Domain.Entities
         /// <param name="combustivel"></param>
         /// <param name="limitePortaMalas"></param>
         /// <param name="categoria"></param>
-        public Veiculo(string placa, MarcaVeiculo marca, ModeloVeiculo modelo, int ano, double valorHora, ETipoCombustivel combustivel, double limitePortaMalas, ECategoriaVeiculo categoria)
+        public Veiculo(string placa, string marca, string modelo, int ano, double valorHora, ETipoCombustivel combustivel, double limitePortaMalas, ECategoriaVeiculo categoria)
         {
             Placa = placa;
-            Marca = marca;
-            Modelo = modelo;
+            CodigoMarca = marca;
+            CodigoModelo = modelo;
             Ano = ano;
             ValorHora = valorHora;
             Combustivel = combustivel;
@@ -52,11 +52,11 @@ namespace Teste.El.Backend.Domain.Entities
         /// <summary>
         /// Marca do veiculo
         /// </summary>
-        public MarcaVeiculo Marca { get; set; }
+        public string CodigoMarca { get; set; }
         /// <summary>
         /// MOdelo do veiculo
         /// </summary>
-        public ModeloVeiculo Modelo { get; set; }
+        public string CodigoModelo { get; set; }
         /// <summary>
         /// Ano do veiculo
         /// </summary>

@@ -24,5 +24,12 @@ namespace Teste.El.Backend.Domain.Repositories
         /// <param name="ctx"></param>
         /// <returns></returns>
         Task<Operador> ObterPorMatricula(string matricula, CancellationToken ctx);
+        /// <summary>
+        /// Verifica se o operador já existe no banco
+        /// </summary>
+        /// <param name="operador"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        Task<bool> VerificarSeExiste(Operador operador, CancellationToken ctx);
     }
 }

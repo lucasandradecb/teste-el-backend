@@ -30,14 +30,14 @@ namespace Teste.El.Backend.Infrastructure.Repositories
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        protected override string CreateRedisKey(ModeloVeiculo model) => ObterChave(model.Id);
+        protected override string CreateRedisKey(ModeloVeiculo model) => ObterChave(model.Codigo);
 
         /// <summary>
         /// Obtém chave de acesso do redis
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="codigo"></param>
         /// <returns></returns>
-        public static string ObterChave(Guid id) => $"modelo:veiculo:{id}";
+        public static string ObterChave(string codigo) => $"modelo:veiculo:{codigo}";
 
         /// <summary>
         /// Armazena o modelo do veiculo no banco de dados
@@ -51,14 +51,27 @@ namespace Teste.El.Backend.Infrastructure.Repositories
         }
 
         /// <summary>
-        /// Obtém o modelo pelo id
+        /// Obtém o modelo pelo codigo
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="codigo"></param>
         /// <param name="ctx"></param>
         /// <returns></returns>
-        public async Task<ModeloVeiculo> ObterPorId(Guid id, CancellationToken ctx)
+        public async Task<ModeloVeiculo> ObterPorCodigo(string codigo, CancellationToken ctx)
         {
-            return await GetByKey(ObterChave(id), ctx);
+            return await GetByKey(ObterChave(codigo), ctx);
+        }
+
+        /// <summary>
+        /// Verifica se a modeloVeiculo já existe no banco
+        /// </summary>
+        /// <param name="modeloVeiculo"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        public async Task<bool> VerificarSeExiste(ModeloVeiculo modeloVeiculo, CancellationToken ctx)
+        {
+            var modeloExistente = await ObterPorCodigo(modeloVeiculo.Codigo, ctx);
+
+            return modeloExistente?.Codigo == modeloVeiculo.Codigo;
         }
     }    
 }

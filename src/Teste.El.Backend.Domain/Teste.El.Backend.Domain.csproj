@@ -12,4 +12,19 @@
     <PackageReference Include="Localiza.BuildingBlocks.Logs" Version="1.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Resources\MensagensInfo.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MensagensInfo.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\MensagensInfo.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MensagensInfo.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>

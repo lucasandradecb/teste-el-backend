@@ -17,6 +17,10 @@ namespace Teste.El.Backend.Infrastructure
         public static IServiceCollection AddInfraServices(this IServiceCollection services)
         {
             services.AddScoped<IClienteRepository, ClienteRepository>();
+            services.AddScoped<IMarcaVeiculoRepository, MarcaVeiculoRepository>();
+            services.AddScoped<IModeloVeiculoRepository, ModeloVeiculoRepository>();
+            services.AddScoped<IOperadorRepository, OperadorRepository>();
+            services.AddScoped<IVeiculoRepository, VeiculoRepository>();
             return services;
         }
     }

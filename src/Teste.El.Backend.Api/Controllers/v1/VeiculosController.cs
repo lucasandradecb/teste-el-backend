@@ -13,24 +13,24 @@ using System.Threading.Tasks;
 namespace Teste.El.Backend.Api.Controllers.v1
 {
     /// <summary>
-    /// Controller de cliente
+    /// Controller de veiculos
     /// </summary>
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class ClientesController : ApiBaseController
+    public class VeiculosController : ApiBaseController
     {
         private readonly IMapper _mapper;
-        private readonly IClienteApplication _clienteApplication;
+        private readonly IVeiculoApplication _veiculoApplication;
 
         /// <summary>
         /// Construtor da classe
         /// </summary>
         /// <param name="mapper"></param>
-        /// <param name="clienteApplication"></param>
-        public ClientesController(IMapper mapper, IClienteApplication clienteApplication)
+        /// <param name="veiculoApplication"></param>
+        public VeiculosController(IMapper mapper, IVeiculoApplication veiculoApplication)
         {
             _mapper = mapper;
-            _clienteApplication = clienteApplication;
+            _veiculoApplication = veiculoApplication;
         }
 
         //[HttpGet]
@@ -61,15 +61,43 @@ namespace Teste.El.Backend.Api.Controllers.v1
         //}
 
         [HttpPost]
-        [ProducesResponseType(typeof(Cliente), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(Veiculo), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> CadastrarCliente(ClienteModel clienteModel, CancellationToken ctx)
+        public async Task<IActionResult> CadastrarVeiculo(VeiculoModel veiculoModel, CancellationToken ctx)
         {
-            var result = await _clienteApplication.CadastrarCliente(clienteModel, ctx);
+            var result = await _veiculoApplication.CadastrarVeiculo(veiculoModel, ctx);
 
             if (result.Valid)
-                return Created("/clientes", result.Object);
+                return Created("/veiculos", result.Object);
+
+            return UnprocessableEntity(result.Notifications);
+        }
+
+        [HttpPost("marcas")]
+        [ProducesResponseType(typeof(MarcaVeiculo), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> CadastrarMarcaVeiculo(MarcaVeiculoModel marcaVeiculoModel, CancellationToken ctx)
+        {
+            var result = await _veiculoApplication.CadastrarMarcaVeiculo(marcaVeiculoModel, ctx);
+
+            if (result.Valid)
+                return Created("/veiculos/marcas", result.Object);
+
+            return UnprocessableEntity(result.Notifications);
+        }
+
+        [HttpPost("modelos")]
+        [ProducesResponseType(typeof(ModeloVeiculo), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> CadastrarModeloVeiculo(ModeloVeiculoModel modeloVeiculoModel, CancellationToken ctx)
+        {
+            var result = await _veiculoApplication.CadastrarModeloVeiculo(modeloVeiculoModel, ctx);
+
+            if (result.Valid)
+                return Created("/veiculos/modelos", result.Object);
 
             return UnprocessableEntity(result.Notifications);
         }

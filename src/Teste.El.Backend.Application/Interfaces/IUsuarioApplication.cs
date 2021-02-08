@@ -6,9 +6,9 @@ using Teste.El.Backend.Domain.Entities;
 namespace Teste.El.Backend.Application.Interfaces
 {
     /// <summary>
-    /// Interface de ClienteApplication
+    /// Interface de UsuarioApplication
     /// </summary>
-    public interface IClienteApplication
+    public interface IUsuarioApplication
     {
         /// <summary>
         /// Realiza o cadastro de um cliente
@@ -17,5 +17,13 @@ namespace Teste.El.Backend.Application.Interfaces
         /// <param name="ctx"></param>
         /// <returns></returns>
         Task<Result<Cliente>> CadastrarCliente(ClienteModel clienteModel, CancellationToken ctx);
+
+        /// <summary>
+        /// Realiza o cadastro de um operador
+        /// </summary>
+        /// <param name="operadorModel"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        Task<Result<Operador>> CadastrarOperador(OperadorModel operadorModel, CancellationToken ctx);
     }
 }

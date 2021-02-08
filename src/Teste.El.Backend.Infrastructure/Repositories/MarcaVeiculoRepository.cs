@@ -30,14 +30,14 @@ namespace Teste.El.Backend.Infrastructure.Repositories
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        protected override string CreateRedisKey(MarcaVeiculo model) => ObterChave(model.Id);
+        protected override string CreateRedisKey(MarcaVeiculo model) => ObterChave(model.Codigo);
 
         /// <summary>
         /// Obtém chave de acesso do redis
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="codigo"></param>
         /// <returns></returns>
-        public static string ObterChave(Guid id) => $"marca:veiculo:{id}";
+        public static string ObterChave(string codigo) => $"marca:veiculo:{codigo}";
 
         /// <summary>
         /// Armazena a marca do veiculo no banco de dados
@@ -51,14 +51,27 @@ namespace Teste.El.Backend.Infrastructure.Repositories
         }
 
         /// <summary>
-        /// Obtém a marca pelo id
+        /// Obtém a marca pelo codigo
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="codigo"></param>
         /// <param name="ctx"></param>
         /// <returns></returns>
-        public async Task<MarcaVeiculo> ObterPorId(Guid id, CancellationToken ctx)
+        public async Task<MarcaVeiculo> ObterPorCodigo(string codigo, CancellationToken ctx)
         {
-            return await GetByKey(ObterChave(id), ctx);
+            return await GetByKey(ObterChave(codigo), ctx);
+        }
+
+        /// <summary>
+        /// Verifica se a marcaVeiculo já existe no banco
+        /// </summary>
+        /// <param name="marcaVeiculo"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        public async Task<bool> VerificarSeExiste(MarcaVeiculo marcaVeiculo, CancellationToken ctx)
+        {
+            var marcaExistente = await ObterPorCodigo(marcaVeiculo.Codigo, ctx);
+
+            return marcaExistente?.Codigo == marcaVeiculo.Codigo;
         }
     }    
 }

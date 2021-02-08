@@ -17,17 +17,24 @@ namespace Teste.El.Backend.Domain.Entities
         /// <summary>
         /// Construtor 
         /// </summary>
+        /// <param name="codigo"></param>
         /// <param name="descricao"></param>
-        public MarcaVeiculo(string descricao)
+        public MarcaVeiculo(string codigo, string descricao)
         {
+            Codigo = codigo;
             Descricao = descricao;
             DataCriacao = DateTime.UtcNow;            
 
             AddNotifications(new Contract()
                 .Requires()
+                .IsNotNull(Codigo, nameof(Codigo), "Codigo não pode ser nulo")
                 .IsNotNull(Descricao, nameof(Descricao), "Descricao não pode ser nula"));
         }
 
+        /// <summary>
+        /// Codigo da marca do veiculo
+        /// </summary>
+        public string Codigo { get; set; }
         /// <summary>
         /// Descrição da marca
         /// </summary>
