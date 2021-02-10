@@ -14,6 +14,7 @@ using Teste.El.Backend.Infrastructure;
 using Teste.El.Backend.Application;
 using Teste.El.Backend.Domain.Repositories;
 using Teste.El.Backend.Infrastructure.Repositories;
+using System.Text.Json.Serialization;
 
 namespace Teste.El.Backend.Api
 {
@@ -69,6 +70,10 @@ namespace Teste.El.Backend.Api
                 c.IncludeXmlComments(apiPath);
                 c.IncludeXmlComments(applicationPath);
             });
+
+            services.AddControllersWithViews()
+                    .AddJsonOptions(options =>
+                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

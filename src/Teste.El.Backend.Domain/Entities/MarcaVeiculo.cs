@@ -15,6 +15,16 @@ namespace Teste.El.Backend.Domain.Entities
         public MarcaVeiculo() { }
 
         /// <summary>
+        /// Construtor código
+        /// </summary>
+        /// <param name="codigo"></param>
+        public MarcaVeiculo(string codigo)
+        {
+            Codigo = codigo;
+            DataCriacao = DateTime.UtcNow;
+        }
+
+        /// <summary>
         /// Construtor 
         /// </summary>
         /// <param name="codigo"></param>

@@ -41,8 +41,12 @@ namespace Teste.El.Backend.Domain.Entities
 
             AddNotifications(new Contract()
                 .Requires()
-                .IsNotNull(Placa, nameof(Placa), "Placa não pode ser nula")
-                .IsNotNull(ValorHora, nameof(ValorHora), "ValorHora não pode ser nulo"));
+                .IsNotNullOrEmpty(Placa, nameof(Placa), "Placa não pode ser nula ou vazia")
+                .IsNotNull(ValorHora, nameof(ValorHora), "ValorHora não pode ser nulo")
+                .IsGreaterThan(ValorHora, 0, nameof(ValorHora), "ValorHora deve ser maior do que zero")
+                .IsNotNullOrEmpty(CodigoMarca, nameof(CodigoMarca), "Marca não pode ser nula ou vazia")
+                .IsNotNullOrEmpty(CodigoModelo, nameof(CodigoModelo), "Modelo não pode ser nulo ou vazio")
+                .IsNotNull(Categoria, nameof(Categoria), "Categoria não pode ser nula"));
         }
 
         /// <summary>

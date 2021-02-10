@@ -33,6 +33,13 @@ namespace Teste.El.Backend.Application.Mapping
                 .ForMember(dest => dest.LimitePortaMalas, m => m.MapFrom(src => src.LimitePortaMalas))
                 .ForMember(dest => dest.Placa, m => m.MapFrom(src => src.Placa))
                 .ReverseMap();
+
+            CreateMap<Agendamento, AgendamentoOutputModel>()
+                .ForMember(dest => dest.Categoria, m => m.MapFrom(src => src.CategoriaVeiculo))
+                .ForMember(dest => dest.CodigoReserva, m => m.MapFrom(src => src.CodigoReserva))
+                .ForMember(dest => dest.Placa, m => m.MapFrom(src => src.Placa))
+                .ForMember(dest => dest.ValorHora, m => m.MapFrom(src => src.ValorHoraVeiculo))
+                .ForMember(dest => dest.ValorTotal, m => m.MapFrom(src => src.ValorTotalAluguel));
         }
     }
 }

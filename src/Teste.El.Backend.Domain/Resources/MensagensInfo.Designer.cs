@@ -61,6 +61,24 @@ namespace Teste.El.Backend.Domain.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data de devolução não pode ser inferior a data de retirada..
+        /// </summary>
+        public static string Agendamento_DataDevMenorRet {
+            get {
+                return ResourceManager.GetString("Agendamento_DataDevMenorRet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de retirada ou devolução não possuem valores válidos..
+        /// </summary>
+        public static string Agendamento_DatasInvalidas {
+            get {
+                return ResourceManager.GetString("Agendamento_DatasInvalidas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to OPS!!! Já existe um cliente cadastrado com o CPF informado..
         /// </summary>
         public static string Cliente_CpfExistente {
@@ -106,11 +124,47 @@ namespace Teste.El.Backend.Domain.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A marca informada para o veículo não está cadastrada. Por favor, cadastre antes de seguir o processo..
+        /// </summary>
+        public static string Veiculo_MarcaNaoCadastrada {
+            get {
+                return ResourceManager.GetString("Veiculo_MarcaNaoCadastrada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O modelo informado para o veículo não está cadastrado. Por favor, cadastre antes de seguir o processo..
+        /// </summary>
+        public static string Veiculo_ModeloNaoCadastrado {
+            get {
+                return ResourceManager.GetString("Veiculo_ModeloNaoCadastrado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to OPS!!! Já existe um veículo cadastrado com a placa informada..
         /// </summary>
         public static string Veiculo_PlacaExistente {
             get {
                 return ResourceManager.GetString("Veiculo_PlacaExistente", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Placa informada não pode ser nula ou vazia..
+        /// </summary>
+        public static string Veiculo_PlacaInvalida {
+            get {
+                return ResourceManager.GetString("Veiculo_PlacaInvalida", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Não foi encontrado um veículo com a placa informada..
+        /// </summary>
+        public static string Veiculo_PlacaNaoEncontrada {
+            get {
+                return ResourceManager.GetString("Veiculo_PlacaNaoEncontrada", resourceCulture);
             }
         }
     }

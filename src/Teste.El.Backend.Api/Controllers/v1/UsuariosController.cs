@@ -60,6 +60,12 @@ namespace Teste.El.Backend.Api.Controllers.v1
         //    return Ok(_mapper.Map<IEnumerable<Cliente>, IEnumerable<ClienteModel>>(cliente));
         //}
 
+        /// <summary>
+        /// Realiza o cadastro de um cliente
+        /// </summary>
+        /// <param name="clienteModel"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
         [HttpPost("clientes")]
         [ProducesResponseType(typeof(Cliente), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
@@ -74,6 +80,12 @@ namespace Teste.El.Backend.Api.Controllers.v1
             return UnprocessableEntity(result.Notifications);
         }
 
+        /// <summary>
+        /// Realiza o cadastro de um operador
+        /// </summary>
+        /// <param name="operadorModel"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
         [HttpPost("operadores")]
         [ProducesResponseType(typeof(Operador), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
