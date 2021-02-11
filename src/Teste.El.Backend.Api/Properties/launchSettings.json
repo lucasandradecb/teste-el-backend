@@ -15,7 +15,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development",
         "RETURN_DEFAULT_EXCEPTION": "false",
         "REDIS_HOST": "localhost",
-        "REDIS_PORT": "9000",
+        "REDIS_PORT": "6379",
         "REDIS_DATABASE": "0",
         "REDIS_ALLOWADMIN": "true",
         "REDIS_PASSWORD": "string.Empty"
@@ -28,7 +28,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development",
         "RETURN_DEFAULT_EXCEPTION": "false",
         "REDIS_HOST": "localhost",
-        "REDIS_PORT": "9000",
+        "REDIS_PORT": "6379",
         "REDIS_DATABASE": "0",
         "REDIS_ALLOWADMIN": "true",
         "REDIS_PASSWORD": "string.Empty"
