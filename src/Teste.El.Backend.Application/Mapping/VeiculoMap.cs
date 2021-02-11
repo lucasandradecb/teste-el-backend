@@ -40,6 +40,15 @@ namespace Teste.El.Backend.Application.Mapping
                 .ForMember(dest => dest.Placa, m => m.MapFrom(src => src.Placa))
                 .ForMember(dest => dest.ValorHora, m => m.MapFrom(src => src.ValorHoraVeiculo))
                 .ForMember(dest => dest.ValorTotal, m => m.MapFrom(src => src.ValorTotalAluguel));
+
+            CreateMap<Veiculo, VeiculoCompletoOutputModel>()
+                .ForMember(dest => dest.Ano, m => m.MapFrom(src => src.Ano))
+                .ForMember(dest => dest.Categoria, m => m.MapFrom(src => src.Categoria))
+                .ForMember(dest => dest.Marca, m => m.MapFrom(src => src.CodigoMarca))
+                .ForMember(dest => dest.Modelo, m => m.MapFrom(src => src.CodigoModelo))
+                .ForMember(dest => dest.Combustivel, m => m.MapFrom(src => src.Combustivel))
+                .ForMember(dest => dest.LimitePortaMalas, m => m.MapFrom(src => src.LimitePortaMalas))
+                .ForMember(dest => dest.Placa, m => m.MapFrom(src => src.Placa));
         }
     }
 }

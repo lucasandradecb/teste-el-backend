@@ -5,6 +5,8 @@ using Localiza.BuildingBlocks.Redis;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Diagnostics.CodeAnalysis;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Teste.El.Backend.Infrastructure.Repositories
 {
@@ -72,6 +74,25 @@ namespace Teste.El.Backend.Infrastructure.Repositories
             var veiculoExistente = await ObterPorPlaca(veiculo.Placa, ctx);
 
             return veiculoExistente?.Placa == veiculo.Placa;
+        }
+
+        /// <summary>
+        /// Obtém lista de veiculos
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<Veiculo>> ListarTodos(CancellationToken ctx)
+        {
+            var listaChaves = GetServer().Keys(pattern: "veiculo:*").ToList();
+            var listaVeiculos = new List<Veiculo>();
+            
+            foreach (var chave in listaChaves)
+            {
+                var veiculo = await GetByKey(chave, ctx);
+                if (veiculo != default)
+                    listaVeiculos.Add(veiculo);
+            }
+
+            return listaVeiculos;
         }
 
     }    

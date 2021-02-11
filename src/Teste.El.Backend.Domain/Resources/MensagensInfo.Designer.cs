@@ -167,5 +167,23 @@ namespace Teste.El.Backend.Domain.Resources {
                 return ResourceManager.GetString("Veiculo_PlacaNaoEncontrada", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O código de reserva informado não pode ser nulo ou vazio..
+        /// </summary>
+        public static string Veiculo_ReservaInvalida {
+            get {
+                return ResourceManager.GetString("Veiculo_ReservaInvalida", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O código de reserva informado não foi encontrado..
+        /// </summary>
+        public static string Veiculo_ReservaNaoEncontrada {
+            get {
+                return ResourceManager.GetString("Veiculo_ReservaNaoEncontrada", resourceCulture);
+            }
+        }
     }
 }

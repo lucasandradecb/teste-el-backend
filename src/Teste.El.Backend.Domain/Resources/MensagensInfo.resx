@@ -153,4 +153,10 @@
   <data name="Veiculo_PlacaNaoEncontrada" xml:space="preserve">
     <value>Não foi encontrado um veículo com a placa informada.</value>
   </data>
+  <data name="Veiculo_ReservaInvalida" xml:space="preserve">
+    <value>O código de reserva informado não pode ser nulo ou vazio.</value>
+  </data>
+  <data name="Veiculo_ReservaNaoEncontrada" xml:space="preserve">
+    <value>O código de reserva informado não foi encontrado.</value>
+  </data>
 </root>

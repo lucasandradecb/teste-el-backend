@@ -82,6 +82,30 @@ namespace Teste.El.Backend.Application
             return Result<Veiculo>.Ok(veiculo);                 
         }
 
+        /// <summary>
+        /// Obtém a lista de veículos 
+        /// </summary>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        public async Task<Result<List<VeiculoCompletoOutputModel>>> ListarTodos(CancellationToken ctx)
+        {
+            var listaDadosCompletos = new List<VeiculoCompletoOutputModel>();
+            var listaVeiculos = await _veiculoRepository.ListarTodos(ctx);
+
+            foreach (var veiculo in listaVeiculos)
+            {
+                var dadosCompletos = _mapper.Map<VeiculoCompletoOutputModel>(veiculo);
+                var marcaVeiculo = await _marcaVeiculoRepository.ObterPorCodigo(dadosCompletos.Marca, ctx);
+                var modeloVeiculo = await _modeloVeiculoRepository.ObterPorCodigo(dadosCompletos.Modelo, ctx);
+
+                dadosCompletos.DescricaoMarca = marcaVeiculo.Descricao;
+                dadosCompletos.DescricaoModelo = modeloVeiculo.Descricao;
+                listaDadosCompletos.Add(dadosCompletos);
+            }
+
+            return Result<List<VeiculoCompletoOutputModel>>.Ok(listaDadosCompletos);
+        }
+
         #endregion
 
         #region Marca Veículo
@@ -211,6 +235,60 @@ namespace Teste.El.Backend.Application
             var output = _mapper.Map<Agendamento, AgendamentoOutputModel>(agendamento);
 
             return Result<AgendamentoOutputModel>.Ok(output);
+        }
+
+        #endregion
+
+        #region Devolução
+
+        /// <summary>
+        /// Realiza a devolução do veiculo
+        /// </summary>
+        /// <param name="devolucaoInput"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        public async Task<Result<DevolucaoOutputModel>> DevolverVeiculo(DevolucaoInputModel devolucaoInput, CancellationToken ctx)
+        {
+            if (string.IsNullOrEmpty(devolucaoInput.CodigoReserva))
+            {
+                var notification = new List<Notification> { new Notification(nameof(devolucaoInput.CodigoReserva), MensagensInfo.Veiculo_ReservaInvalida) };
+                return Result<DevolucaoOutputModel>.Error(notification);
+            }
+
+            if (string.IsNullOrEmpty(devolucaoInput.Placa))
+            {
+                var notification = new List<Notification> { new Notification(nameof(devolucaoInput.Placa), MensagensInfo.Veiculo_PlacaInvalida) };
+                return Result<DevolucaoOutputModel>.Error(notification);
+            }
+
+            var agendamento = await _agendamentoRepository.ObterPorReserva(devolucaoInput.CodigoReserva, ctx);
+            if (agendamento == null)
+            {
+                var notification = new List<Notification> { new Notification(nameof(Agendamento), MensagensInfo.Veiculo_ReservaNaoEncontrada) };
+                return Result<DevolucaoOutputModel>.Error(notification);
+            }
+
+            var valorTotal30PorCento = Math.Round((30.0 / 100.0) * agendamento.ValorTotalAluguel, 2);
+
+            var valorAdicional = devolucaoInput.ItensVistoria.Amassados ? valorTotal30PorCento : 0;
+            valorAdicional = devolucaoInput.ItensVistoria.Arranhoes ? valorAdicional + valorTotal30PorCento : valorAdicional;
+            valorAdicional = devolucaoInput.ItensVistoria.CarroLimpo ? valorAdicional + valorTotal30PorCento : valorAdicional;
+            valorAdicional = devolucaoInput.ItensVistoria.TanqueCheio ? valorAdicional + valorTotal30PorCento : valorAdicional;
+
+            var outputModel = new DevolucaoOutputModel
+            {
+                Placa = agendamento.Placa,
+                CodigoReserva = agendamento.CodigoReserva,
+                ValorTotalReserva = agendamento.ValorTotalAluguel + valorAdicional,
+                ItensReserva = new DevolucaoOutputModel.Itens
+                {
+                    TotalHoras = agendamento.TotalHoras,
+                    ValorHora = agendamento.ValorHoraVeiculo,
+                    ValorAdicionalVistoria = valorAdicional
+                }
+            };
+
+            return Result<DevolucaoOutputModel>.Ok(outputModel);
         }
 
         #endregion

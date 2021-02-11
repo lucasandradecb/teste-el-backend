@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Teste.El.Backend.Api.Controllers.v1
 {
@@ -167,6 +168,45 @@ namespace Teste.El.Backend.Api.Controllers.v1
                 return Ok(result.Object);
 
             return UnprocessableEntity(result.Notifications);
+        }
+
+        /// <summary>
+        /// Realiza a devolução de um veiculo
+        /// </summary>
+        /// <param name="devolucaoInput"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        [HttpPost("devolucoes")]
+        [ProducesResponseType(typeof(DevolucaoOutputModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> DevolverVeiculo(DevolucaoInputModel devolucaoInput, CancellationToken ctx)
+        {
+            var result = await _veiculoApplication.DevolverVeiculo(devolucaoInput, ctx);
+
+            if (result.Valid)
+                return Ok(result.Object);
+
+            return UnprocessableEntity(result.Notifications);
+        }
+
+        /// <summary>
+        /// Retorna a lista de veiculos cadastrados
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [ProducesResponseType(typeof(List<VeiculoCompletoOutputModel>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> ListarTodosVeiculos(CancellationToken ctx)
+        {
+            var result = await _veiculoApplication.ListarTodos(ctx);
+
+            if (result.Valid && result.Object.Any())
+                return Ok(result.Object);
+
+            return NoContent();
         }
     }
 }

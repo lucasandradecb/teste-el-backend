@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Teste.El.Backend.Application.Models;
 using Teste.El.Backend.Domain.Entities;
@@ -45,5 +46,18 @@ namespace Teste.El.Backend.Application.Interfaces
         /// <param name="ctx"></param>
         /// <returns></returns>
         Task<Result<AgendamentoOutputModel>> AgendarAluguelVeiculo(AgendamentoInputModel agendamentoInput, CancellationToken ctx);
+        /// <summary>
+        /// Realiza a devolução do veiculo
+        /// </summary>
+        /// <param name="devolucaoInput"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        Task<Result<DevolucaoOutputModel>> DevolverVeiculo(DevolucaoInputModel devolucaoInput, CancellationToken ctx);
+        /// <summary>
+        /// Obtém a lista de veículos 
+        /// </summary>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        Task<Result<List<VeiculoCompletoOutputModel>>> ListarTodos(CancellationToken ctx);
     }
 }

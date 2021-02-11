@@ -2,6 +2,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Teste.El.Backend.Domain.Repositories
 {
@@ -31,5 +32,10 @@ namespace Teste.El.Backend.Domain.Repositories
         /// <param name="ctx"></param>
         /// <returns></returns>
         Task<bool> VerificarSeExiste(Veiculo veiculo, CancellationToken ctx);
+        /// <summary>
+        /// Obtém lista de veiculos
+        /// </summary>
+        /// <returns></returns>
+        Task<List<Veiculo>> ListarTodos(CancellationToken ctx);
     }
 }
