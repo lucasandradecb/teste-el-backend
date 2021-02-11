@@ -2,6 +2,7 @@
 
 # Teste Prático EL Back-end
 Desenvolvido por Lucas Andrade Maciel
+
 Email: lucas.maciel@localiza.com
 
 ## Objetivo
@@ -60,5 +61,11 @@ Para o desenvolvimento da aplicação foi desenvolvida uma arquitetura com 4 cam
 | Infrastructure | Acesso a aplicações externas. Ex: Redis |
 | Domain | Entidades de domínio do projeto |
 
+Além disso, como decisão arquitetural para auxiliar no desenvolvimento prático da aplicação, foi escolhido como banco de dados o Redis, por trabalhar com informações que não precisam ser estruturados, possuir um melhor desempenho em termos de tempo de processamento em comparação a um SQL tradicional, além de ser facilmente implementado, principalmente ao utilizar o SDK disponiblizado pela Localiza.
+
+Contudo, é possível alterar o serviço utilizado como persistência de dados, realizando ajustes apenas na camada de infraestrutura da aplicação.
+
 ## Observações
-Considerando o objetivo principal do teste as entregas relacionadas ao back-end, as etapas de Front-end (Web/Mobile) não foram executadas.
+
+  - Considerando o objetivo principal do teste prático as entregas relacionadas ao back-end, as etapas de Front-end (Web/Mobile) não foram executadas.
+  - A rota de gerar PDF com o contrato não é contemplada na aplicação
