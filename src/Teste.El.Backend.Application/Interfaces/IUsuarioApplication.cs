@@ -11,6 +11,22 @@ namespace Teste.El.Backend.Application.Interfaces
     public interface IUsuarioApplication
     {
         /// <summary>
+        /// Realiza o cadastro de um usuario
+        /// </summary>
+        /// <param name="usuarioModel"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        Task<Result<UsuarioModel>> CadastrarUsuario(UsuarioModel usuarioModel, CancellationToken ctx);
+
+        /// <summary>
+        /// Obtem dados de um usuario
+        /// </summary>
+        /// <param name="usuarioModel"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        Task<Result<UsuarioTipoModel>> ObterUsuario(UsuarioModel usuarioModel, CancellationToken ctx);
+
+        /// <summary>
         /// Realiza o cadastro de um cliente
         /// </summary>
         /// <param name="clienteModel"></param>

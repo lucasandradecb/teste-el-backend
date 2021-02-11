@@ -22,6 +22,7 @@ namespace Teste.El.Backend.Infrastructure
             services.AddScoped<IOperadorRepository, OperadorRepository>();
             services.AddScoped<IVeiculoRepository, VeiculoRepository>();
             services.AddScoped<IAgendamentoRepository, AgendamentoRepository>();
+            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             return services;
         }
     }

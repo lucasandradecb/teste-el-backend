@@ -115,11 +115,47 @@ namespace Teste.El.Backend.Domain.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Não existe um cliente para o login informado, realize o cadastro para prosseguir..
+        /// </summary>
+        public static string Usuario_ClienteNaoExiste {
+            get {
+                return ResourceManager.GetString("Usuario_ClienteNaoExiste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to OPS!!! Já existe um usuário cadastrado com a login informado..
         /// </summary>
         public static string Usuario_LoginExistente {
             get {
                 return ResourceManager.GetString("Usuario_LoginExistente", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Usuário informado não existe, realize o cadastro antes de continuar..
+        /// </summary>
+        public static string Usuario_NaoExiste {
+            get {
+                return ResourceManager.GetString("Usuario_NaoExiste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Não existe um operador para o login informado, realize o cadastro para prosseguir..
+        /// </summary>
+        public static string Usuario_OperadorNaoExiste {
+            get {
+                return ResourceManager.GetString("Usuario_OperadorNaoExiste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A senha informada não é válida..
+        /// </summary>
+        public static string Usuario_SenhaInvalida {
+            get {
+                return ResourceManager.GetString("Usuario_SenhaInvalida", resourceCulture);
             }
         }
         

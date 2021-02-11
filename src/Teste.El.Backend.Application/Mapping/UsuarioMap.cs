@@ -17,9 +17,18 @@ namespace Teste.El.Backend.Application.Mapping
         {
             CreateMap<Cliente, ClienteModel>()
                 .ForMember(dest => dest.Aniversario, m => m.MapFrom(src => src.Aniversario))
-                .ForMember(dest => dest.Endereco, m => m.MapFrom(src => src.Endereco))
+                .ForMember(dest => dest.Endereco, m => m.MapFrom(src => src.Endereco))                
                 .ForMember(dest => dest.Cpf, m => m.MapFrom(src => src.Cpf.ToString()))
                 .ForMember(dest => dest.Nome, m => m.MapFrom(src => src.Nome));
+
+            CreateMap<EnderecoCompleto, ClienteModel.DadosEndereco>()
+                .ForMember(dest => dest.Cep, m => m.MapFrom(src => src.Cep))
+                .ForMember(dest => dest.Cidade, m => m.MapFrom(src => src.Cidade))
+                .ForMember(dest => dest.Complemento, m => m.MapFrom(src => src.Complemento))
+                .ForMember(dest => dest.Estado, m => m.MapFrom(src => src.Estado))
+                .ForMember(dest => dest.Logradouro, m => m.MapFrom(src => src.Logradouro))
+                .ForMember(dest => dest.Numero, m => m.MapFrom(src => src.Numero))
+                .ReverseMap();
 
             CreateMap<ClienteModel, Cliente>()
                 .ForMember(dest => dest.Aniversario, m => m.MapFrom(src => src.Aniversario))
@@ -46,6 +55,11 @@ namespace Teste.El.Backend.Application.Mapping
                         src.Nome,
                         src.Matricula
                     ));
+
+            CreateMap<Usuario, UsuarioModel>()
+                .ForMember(dest => dest.Login, m => m.MapFrom(src => src.Login))
+                .ForMember(dest => dest.Senha, m => m.MapFrom(src => src.Senha))
+                .ReverseMap();            
         }
     }
 }

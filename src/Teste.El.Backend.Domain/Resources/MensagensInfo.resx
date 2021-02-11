@@ -135,8 +135,20 @@
   <data name="Operador_MatriculaExistente" xml:space="preserve">
     <value>OPS!!! Já existe um operador cadastrado com a matrícula informada.</value>
   </data>
+  <data name="Usuario_ClienteNaoExiste" xml:space="preserve">
+    <value>Não existe um cliente para o login informado, realize o cadastro para prosseguir.</value>
+  </data>
   <data name="Usuario_LoginExistente" xml:space="preserve">
     <value>OPS!!! Já existe um usuário cadastrado com a login informado.</value>
+  </data>
+  <data name="Usuario_NaoExiste" xml:space="preserve">
+    <value>Usuário informado não existe, realize o cadastro antes de continuar.</value>
+  </data>
+  <data name="Usuario_OperadorNaoExiste" xml:space="preserve">
+    <value>Não existe um operador para o login informado, realize o cadastro para prosseguir.</value>
+  </data>
+  <data name="Usuario_SenhaInvalida" xml:space="preserve">
+    <value>A senha informada não é válida.</value>
   </data>
   <data name="Veiculo_MarcaNaoCadastrada" xml:space="preserve">
     <value>A marca informada para o veículo não está cadastrada. Por favor, cadastre antes de seguir o processo.</value>

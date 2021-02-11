@@ -34,33 +34,6 @@ namespace Teste.El.Backend.Api.Controllers.v1
             _veiculoApplication = veiculoApplication;
         }
 
-        //[HttpGet]
-        //[Route("{id}")]
-        //[ProducesResponseType(typeof(ClienteModel), StatusCodes.Status200OK)]
-        //[ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
-        //[ProducesResponseType(typeof(ErrorModel), StatusCodes.Status404NotFound)]
-        //[ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
-        //public IActionResult Get(Guid id)
-        //{
-        //    var cliente = _clienteRepository.ObterPorId(id);
-
-        //    if (cliente == null)
-        //        return NotFound("Cliente não encontrado");
-
-        //    return Ok(_mapper.Map<Cliente, ClienteModel>(cliente));
-        //}
-
-        //[HttpGet]
-        //[ProducesResponseType(typeof(IEnumerable<ClienteModel>), StatusCodes.Status200OK)]
-        //[ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
-        //[ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
-        //public IActionResult List()
-        //{
-        //    var cliente = _clienteRepository.ListarTodos();
-
-        //    return Ok(_mapper.Map<IEnumerable<Cliente>, IEnumerable<ClienteModel>>(cliente));
-        //}
-
         /// <summary>
         /// Realiza o cadastro de um veículo
         /// </summary>
@@ -70,6 +43,7 @@ namespace Teste.El.Backend.Api.Controllers.v1
         [HttpPost]
         [ProducesResponseType(typeof(Veiculo), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> CadastrarVeiculo(VeiculoModel veiculoModel, CancellationToken ctx)
         {
@@ -90,6 +64,7 @@ namespace Teste.El.Backend.Api.Controllers.v1
         [HttpPost("marcas")]
         [ProducesResponseType(typeof(MarcaVeiculo), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> CadastrarMarcaVeiculo(MarcaVeiculoModel marcaVeiculoModel, CancellationToken ctx)
         {
@@ -110,6 +85,7 @@ namespace Teste.El.Backend.Api.Controllers.v1
         [HttpPost("modelos")]
         [ProducesResponseType(typeof(ModeloVeiculo), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> CadastrarModeloVeiculo(ModeloVeiculoModel modeloVeiculoModel, CancellationToken ctx)
         {
@@ -130,6 +106,7 @@ namespace Teste.El.Backend.Api.Controllers.v1
         [HttpPost("agendamentos")]
         [ProducesResponseType(typeof(AgendamentoOutputModel), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> AgendarVeiculo(AgendamentoInputModel agendamentoInput, CancellationToken ctx)
         {
@@ -152,6 +129,7 @@ namespace Teste.El.Backend.Api.Controllers.v1
         [HttpGet("{placa}/simulacoes-locacao")]
         [ProducesResponseType(typeof(SimulacaoAgendamentoModel), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> SimularAgendamentoVeiculo([FromRoute] string placa, [FromQuery] DateTime dataRetirada, [FromQuery] DateTime dataDevolucao, CancellationToken ctx)
         {
@@ -179,6 +157,7 @@ namespace Teste.El.Backend.Api.Controllers.v1
         [HttpPost("devolucoes")]
         [ProducesResponseType(typeof(DevolucaoOutputModel), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> DevolverVeiculo(DevolucaoInputModel devolucaoInput, CancellationToken ctx)
         {

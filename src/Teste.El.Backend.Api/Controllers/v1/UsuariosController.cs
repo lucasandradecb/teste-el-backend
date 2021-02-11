@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace Teste.El.Backend.Api.Controllers.v1
 {
@@ -33,32 +34,54 @@ namespace Teste.El.Backend.Api.Controllers.v1
             _usuarioApplication = usuarioApplication;
         }
 
-        //[HttpGet]
-        //[Route("{id}")]
-        //[ProducesResponseType(typeof(ClienteModel), StatusCodes.Status200OK)]
-        //[ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
-        //[ProducesResponseType(typeof(ErrorModel), StatusCodes.Status404NotFound)]
-        //[ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
-        //public IActionResult Get(Guid id)
-        //{
-        //    var cliente = _clienteRepository.ObterPorId(id);
+        /// <summary>
+        /// Realiza o cadastro de um usuario
+        /// </summary>
+        /// <param name="usuarioModel"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> CadastrarUsuario(UsuarioModel usuarioModel, CancellationToken ctx)
+        {
+            var result = await _usuarioApplication.CadastrarUsuario(usuarioModel, ctx);
 
-        //    if (cliente == null)
-        //        return NotFound("Cliente não encontrado");
+            if (result.Valid)
+                return Ok();
 
-        //    return Ok(_mapper.Map<Cliente, ClienteModel>(cliente));
-        //}
+            return UnprocessableEntity(result.Notifications);
+        }
 
-        //[HttpGet]
-        //[ProducesResponseType(typeof(IEnumerable<ClienteModel>), StatusCodes.Status200OK)]
-        //[ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
-        //[ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
-        //public IActionResult List()
-        //{
-        //    var cliente = _clienteRepository.ListarTodos();
+        /// <summary>
+        /// Obtem os dados do usuario
+        /// </summary>
+        /// <param name="login"></param>
+        /// <param name="senha"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [ProducesResponseType(typeof(UsuarioTipoModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> ObterUsuario([FromQuery, Required] string login, [FromQuery, Required] string senha, CancellationToken ctx)
+        {
+            var input = new UsuarioModel
+            {
+                Login = login,
+                Senha = senha
+            };
 
-        //    return Ok(_mapper.Map<IEnumerable<Cliente>, IEnumerable<ClienteModel>>(cliente));
-        //}
+            var result = await _usuarioApplication.ObterUsuario(input, ctx);
+
+            if (result.Valid)
+                return Ok(result.Object);
+
+            return UnprocessableEntity(result.Notifications);
+        }
 
         /// <summary>
         /// Realiza o cadastro de um cliente
@@ -69,6 +92,7 @@ namespace Teste.El.Backend.Api.Controllers.v1
         [HttpPost("clientes")]
         [ProducesResponseType(typeof(Cliente), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> CadastrarCliente(ClienteModel clienteModel, CancellationToken ctx)
         {
@@ -89,6 +113,7 @@ namespace Teste.El.Backend.Api.Controllers.v1
         [HttpPost("operadores")]
         [ProducesResponseType(typeof(Operador), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> CadastrarOperador(OperadorModel operadorModel, CancellationToken ctx)
         {
