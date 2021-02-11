@@ -1,7 +1,8 @@
-﻿using Teste.El.Backend.Domain.Enums;
+﻿using System.Diagnostics.CodeAnalysis;
 
 namespace Teste.El.Backend.Application.Models
 {
+    [ExcludeFromCodeCoverage]
     /// <summary>
     /// Modelo de dados de simulação de agendamento
     /// </summary>

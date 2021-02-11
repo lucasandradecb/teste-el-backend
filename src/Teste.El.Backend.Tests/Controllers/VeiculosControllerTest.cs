@@ -55,20 +55,46 @@ namespace Teste.El.Backend.Tests.Controllers
         ///    informar os motivos de não ser possivel cadastrar
         /// </summary>
         [Theory]
-        [InlineData(false, true)]
-        public async void CadastrarVeiculo_Erro(bool veiculoValido, bool veiculoExiste)
+        [InlineData(false, true, true, true, "AAA1234")]
+        [InlineData(false, false, false, true, "AAA1234")]
+        [InlineData(false, false, true, false, "AAA1234")]
+        [InlineData(false, false, true, false, "")]
+        public async void CadastrarVeiculo_Erro(bool veiculoValido, bool veiculoExiste, bool marcaExiste, bool modeloExiste, string placa)
         {
             //Prepare           
             var ctx = CancellationToken.None;
-            var controller = CriarUsuarioController(veiculoValido, true, true, true, veiculoExiste);
+            var controller = CriarUsuarioController(veiculoValido, true, true, true, veiculoExiste, marcaExiste, modeloExiste);
 
             var input = new VeiculoFixture().CriarVeiculoModel();
+            input.Placa = placa;
 
             //Act
             var result = await controller.CadastrarVeiculo(input, ctx);
 
             //Assert
             Assert.IsType<UnprocessableEntityObjectResult>(result);
+        }
+
+        /// <summary>
+        /// Dado que:
+        ///    seja solicitada a lista de veiculos cadastrados
+        /// Eu preciso 
+        ///    obter todos os registros armazenados
+        /// Para 
+        ///    que o usuario possa visualizar as opções
+        /// </summary>
+        [Fact]
+        public async void ListarTodosVeiculos_Sucesso()
+        {
+            //Prepare           
+            var ctx = CancellationToken.None;
+            var controller = CriarUsuarioController();
+
+            //Act
+            var result = await controller.ListarTodosVeiculos(ctx);
+
+            //Assert
+            Assert.IsType<OkObjectResult>(result);
         }
 
         #endregion
@@ -201,7 +227,7 @@ namespace Teste.El.Backend.Tests.Controllers
 
             //Assert
             Assert.IsType<CreatedResult>(result);
-        }
+        }        
 
         /// <summary>
         /// Dado que:
@@ -232,6 +258,127 @@ namespace Teste.El.Backend.Tests.Controllers
 
             //Act
             var result = await controller.AgendarVeiculo(input, ctx);
+
+            //Assert
+            Assert.IsType<UnprocessableEntityObjectResult>(result);
+        }
+
+        #endregion
+
+        #region Simulacao
+
+        /// <summary>
+        /// Dado que:
+        ///    seja selecionado um veiculo
+        /// Eu preciso 
+        ///    simular o preço de aluguel 
+        /// Para 
+        ///    Verficar qual será o veiculo a ser agendado
+        /// </summary>
+        [Fact]
+        public async void SimularAluguel_Sucesso()
+        {
+            //Prepare           
+            var ctx = CancellationToken.None;
+            var controller = CriarUsuarioController(true, true, true, true, true, true, true, false);
+
+            var input = new VeiculoFixture().CriarAgendamentoInputModel();
+
+            //Act
+            var result = await controller.SimularAgendamentoVeiculo(input.Placa, input.DataRetirada, input.DataDevolucao, ctx);
+
+            //Assert
+            Assert.IsType<OkObjectResult>(result);
+        }
+
+        /// <summary>
+        /// Dado que:
+        ///    seja solicitado o agendaemnto de um veiculo
+        /// Eu preciso 
+        ///    validar se os dados informados são válidos e se não existem no banco
+        /// Para 
+        ///    Informar o motivo de nao ser possivel armazenar o agendamento
+        /// </summary>
+        [Theory]
+        [InlineData("", 0, true)]
+        [InlineData("AAABHZ", 10, true)]
+        [InlineData("AAABHZ", -1, true)]
+        [InlineData("AAABHZ", 0, false)]
+        public async void SimularAluguel_Erro(string placa, int dataRetiradaAddAno, bool veiculoValido)
+        {
+            //Prepare           
+            var ctx = CancellationToken.None;
+            var controller = CriarUsuarioController(veiculoValido, true, true, true, true, true, true, true);
+
+            var input = new VeiculoFixture().CriarAgendamentoInputModel();
+            input.Placa = placa;
+
+            if (dataRetiradaAddAno < 0)
+                input.DataRetirada = DateTime.MinValue;
+            else
+                input.DataRetirada = input.DataRetirada.AddYears(dataRetiradaAddAno);
+
+            //Act
+            var result = await controller.SimularAgendamentoVeiculo(input.Placa, input.DataRetirada, input.DataDevolucao, ctx);
+
+            //Assert
+            Assert.IsType<UnprocessableEntityObjectResult>(result);
+        }
+
+        #endregion
+
+        #region Devolucao
+
+        /// <summary>
+        /// Dado que:
+        ///    seja solicitada a devolução de um veiculo
+        /// Eu preciso 
+        ///    validar se os dados informados são válidos 
+        ///    e se houve alguma indenização registrada na vistoria
+        /// Para 
+        ///    Informar ao usuário o valor que ele deverá pagar 
+        /// </summary>
+        [Fact]
+        public async void DevolverVeiculo_Sucesso()
+        {
+            //Prepare           
+            var ctx = CancellationToken.None;
+            var controller = CriarUsuarioController(true, true, true, true, true, true, true, false);
+
+            var input = new VeiculoFixture().CriarDevolucaoInputModel();
+
+            //Act
+            var result = await controller.DevolverVeiculo(input, ctx);
+
+            //Assert
+            Assert.IsType<OkObjectResult>(result);
+        }
+
+        /// <summary>
+        /// Dado que:
+        ///    seja solicitada a devolução de um veiculo
+        /// Eu preciso 
+        ///    validar se os dados informados são válidos 
+        ///    e se houve alguma indenização registrada na vistoria
+        /// Para 
+        ///    Informar ao usuário o motivo de não conseguir devolver o veiculo 
+        /// </summary>
+        [Theory]
+        [InlineData("", "6MQEW4UEH2", true)]
+        [InlineData("AAABHZ", "", true)]
+        [InlineData("AAABHZ", "6MQEW4UEH2", false)]
+        public async void DevolverVeiculo_Erro(string placa, string codigoReserva, bool agendamentoValido)
+        {
+            //Prepare           
+            var ctx = CancellationToken.None;
+            var controller = CriarUsuarioController(true, true, true, agendamentoValido, true, true, true, true);
+
+            var input = new VeiculoFixture().CriarDevolucaoInputModel();
+            input.Placa = placa;
+            input.CodigoReserva = codigoReserva;
+
+            //Act
+            var result = await controller.DevolverVeiculo(input, ctx);
 
             //Assert
             Assert.IsType<UnprocessableEntityObjectResult>(result);

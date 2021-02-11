@@ -70,5 +70,21 @@ namespace Teste.El.Backend.Tests.Fixtures
                 Placa = "AAA1234"
             };
         }
+
+        public DevolucaoInputModel CriarDevolucaoInputModel()
+        {
+            return new DevolucaoInputModel
+            { 
+                CodigoReserva = "6MQEW4UEH2",
+                Placa = "AAA1234",
+                ItensVistoria = new DevolucaoInputModel.VistoriaIndenizacao
+                { 
+                   Amassados = true,
+                   Arranhoes = false,
+                   CarroLimpo = true,
+                   TanqueCheio = true
+                }
+            };
+        }
     }
 }

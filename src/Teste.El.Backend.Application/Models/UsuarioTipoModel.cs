@@ -1,5 +1,8 @@
-﻿namespace Teste.El.Backend.Application.Models
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Teste.El.Backend.Application.Models
 {
+    [ExcludeFromCodeCoverage]
     /// <summary>
     /// Modelo de dados de usuario
     /// </summary>

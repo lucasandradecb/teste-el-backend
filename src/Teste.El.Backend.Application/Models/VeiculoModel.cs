@@ -1,8 +1,9 @@
-﻿using System;
+﻿using System.Diagnostics.CodeAnalysis;
 using Teste.El.Backend.Domain.Enums;
 
 namespace Teste.El.Backend.Application.Models
 {
+    [ExcludeFromCodeCoverage]
     /// <summary>
     /// Modelo de dados de um veículo
     /// </summary>
