@@ -10,7 +10,8 @@ namespace Teste.El.Backend.Tests.Fixtures
         {
             var config = new MapperConfiguration(opts =>
             {
-                opts.AddProfile(new Application.Mapping.ClienteMap());
+                opts.AddProfile(new Application.Mapping.UsuarioMap());
+                opts.AddProfile(new Application.Mapping.VeiculoMap());
             });
 
             Mapper = config.CreateMapper();

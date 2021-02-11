@@ -45,6 +45,9 @@ namespace Teste.El.Backend.Domain.ValueObjects
         /// <returns></returns>
         private bool IsCpf(string cpf)
         {
+            if (string.IsNullOrEmpty(cpf))
+                return false;
+
             int[] multiplicador1 = new int[9] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
             int[] multiplicador2 = new int[10] { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
 
@@ -56,8 +59,13 @@ namespace Teste.El.Backend.Domain.ValueObjects
                 if (j.ToString().PadLeft(11, char.Parse(j.ToString())) == cpf)
                     return false;
 
+            char[] datachars = cpf.ToCharArray();
+            foreach (var datachar in datachars)            
+                if (!char.IsDigit(datachar))
+                    return false;  
+
             string tempCpf = cpf.Substring(0, 9);
-            int soma = 0;
+            int soma = 0;            
 
             for (int i = 0; i < 9; i++)
                 soma += int.Parse(tempCpf[i].ToString()) * multiplicador1[i];

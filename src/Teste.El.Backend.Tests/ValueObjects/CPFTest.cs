@@ -3,8 +3,19 @@ using Xunit;
 
 namespace Teste.El.Backend.Tests.ValueObjects
 {
+    /// <summary>
+    /// Testes unitários do value object de CPF
+    /// </summary>
     public class CPFTest
     {
+        /// <summary>
+        /// Dado que:
+        ///    Um número de cpf tenha sido informado
+        /// Eu preciso 
+        ///    Validar o cpf
+        /// Para 
+        ///    Informar o motivo do cpf não ser válido 
+        /// </summary>
         [Theory]
         [InlineData(null)]
         [InlineData("")]
@@ -18,26 +29,24 @@ namespace Teste.El.Backend.Tests.ValueObjects
             var cpf = new CPF(numero);
 
             Assert.True(cpf.Invalid);
-            Assert.Contains(cpf.Notifications, n => n.Property == nameof(CPF.Numero));
         }
 
+        /// <summary>
+        /// Dado que:
+        ///    Um número de cpf tenha sido informado
+        /// Eu preciso 
+        ///    Validar o cpf
+        /// Para 
+        ///    Informar que o número é um cpf válido 
+        /// </summary>
         [Theory]
-        [InlineData("12345678901")]
-        [InlineData("09876543210")]
+        [InlineData("01921216000")]
+        [InlineData("90459735020")]
         public void CriarCpf_CpfValido_Test(string numero)
         {
             var cpf = new CPF(numero);
 
             Assert.True(cpf.Valid);
-        }
-
-        [Fact]
-        public void CriarCpf_CpfValido_GetCopy_Test()
-        {
-            var cpf = new CPF("12345678901");
-            var cpfClone = (CPF)cpf.GetCopy();
-
-            Assert.Equal(cpfClone.Numero, cpf.Numero);
-        }
+        }        
     }
 }

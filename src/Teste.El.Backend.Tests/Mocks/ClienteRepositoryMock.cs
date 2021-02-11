@@ -2,54 +2,52 @@
 using Teste.El.Backend.Domain.Repositories;
 using Teste.El.Backend.Domain.ValueObjects;
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
+using System.Threading;
+using Moq;
+using Teste.El.Backend.Tests.Fixtures;
 
 namespace Teste.El.Backend.Tests.Mocks
 {
-    public class ClienteRepositoryMock : IClienteRepository
+    public class ClienteRepositoryMock : Mock<IClienteRepository>
     {
-        public void Incluir(Cliente cliente)
+        public ClienteRepositoryMock VerificarSeExiste(bool existe)
         {
+            if (!existe)
+                Setup(c => c.VerificarSeExiste(It.IsAny<Cliente>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult<bool>(false));
+            else
+                Setup(c => c.VerificarSeExiste(It.IsAny<Cliente>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult<bool>(true));
+
+            return this;
         }
 
-        public Cliente ObterPorId(Guid id)
+        public ClienteRepositoryMock Salvar()
         {
-            return Clientes.FirstOrDefault(c => c.Id == id);
+            Setup(c => c.Salvar(It.IsAny<Cliente>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+
+            return this;
         }
 
-        public IEnumerable<Cliente> ListarTodos()
+        public ClienteRepositoryMock ObterPorCpf(bool valid = true)
         {
-            return Clientes;
+            if (valid)
+                Setup(c => c.ObterPorCpf(It.IsAny<string>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult<Cliente>(CriarCliente()));
+            else
+                Setup(c => c.ObterPorCpf(It.IsAny<string>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult<Cliente>(null));
+
+            return this;
         }
 
-        private static IEnumerable<Cliente> Clientes
+        private Cliente CriarCliente()
         {
-            get
+            return new Cliente
             {
-                var cliente1 = new Cliente(
-                        new Nome("João", "Silva"),
-                        new CPF("12345678910"),
-                        new Email("joaosilva@gmail.com"),
-                        "abc123");
-
-                var cliente2 = new Cliente(
-                        new Nome("Maria", "Silva"),
-                        new CPF("01987654321"),
-                        new Email("mariasilva@gmail.com"),
-                        "xpz789");
-
-                typeof(Cliente).GetProperty("Id").SetValue(cliente1, Guid.Parse("f8a0db6b-dabf-4f97-9b1c-8cf08b930466"));
-                typeof(Cliente).GetProperty("DataCriacao").SetValue(cliente1, new DateTime(2011, 2, 2));
-
-                typeof(Cliente).GetProperty("Id").SetValue(cliente2, Guid.Parse("6fdc66ad-649f-4f3c-9806-6409e8ca4e47"));
-                typeof(Cliente).GetProperty("DataCriacao").SetValue(cliente2, new DateTime(2010, 1, 1));
-
-                return new Cliente[]
-                {
-                        cliente1, cliente2
-                };
-            }
+                Aniversario = DateTime.Now.AddYears(-20),
+                Cpf = new CPF("90459735020"),
+                DataCriacao = DateTime.Now,
+                Nome = "Teste",
+                Endereco = new EnderecoFixture().CriarEndereco()
+            };
         }
     }
 }
