@@ -11,7 +11,7 @@ namespace Teste.El.Backend.Tests.Mocks
 {
     public class ClienteRepositoryMock : Mock<IClienteRepository>
     {
-        public ClienteRepositoryMock VerificarSeExiste(bool existe)
+        public ClienteRepositoryMock VerificarSeExiste(bool existe = true)
         {
             if (!existe)
                 Setup(c => c.VerificarSeExiste(It.IsAny<Cliente>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult<bool>(false));

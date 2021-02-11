@@ -42,7 +42,7 @@ namespace Teste.El.Backend.Tests.Mocks
             {                
                 Login = "90459735020",
                 DataCriacao = DateTime.Now,
-                Senha = "123456"
+                Senha = "ce0bfd15059b68d67688884d7a3d3e8c"
             };
         }
     }

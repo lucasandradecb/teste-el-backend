@@ -6,11 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Controllers\**" />
     <Compile Remove="Domain\**" />
-    <EmbeddedResource Remove="Controllers\**" />
     <EmbeddedResource Remove="Domain\**" />
-    <None Remove="Controllers\**" />
     <None Remove="Domain\**" />
   </ItemGroup>
 
